@@ -92,7 +92,7 @@ public abstract class AbstractEntryFactory {
             if (attribute.equals("author")) {
                 this.authorsSurnames = new String[value.split("and", -1).length];
                 this.authorsNames = new String[this.authorsSurnames.length];
-                String[] auth = value.split("and");
+                String[] auth = value.split(" and ");
                 for (int j = 0; j < auth.length; j++) {
                     this.authorsNames[j] = auth[j].split(" ", 2)[0];
                     this.authorsSurnames[j] = auth[j].split(" ")[auth[j].split(" ").length - 1];
