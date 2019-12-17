@@ -1,5 +1,6 @@
 package parser;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +26,10 @@ public class Main {
                     " all records types in capital letters e.g. ARTICLE as reflection is used.");
             throw new IllegalArgumentException();
         }
+
+        if (!new File(args[0]).isFile())
+            throw new IllegalArgumentException("Such file doesn't exist!");
+
         Parser parser = new Parser();
         List<AbstractEntryFactory> entries;
         try {
@@ -32,16 +37,23 @@ public class Main {
             if (!args[1].equals("")) {
                 TypeVisitor typeVisitor = new TypeVisitor();
                 String[] types = args[1].split("\\|");
-                for (int i = 0; i < types.length; i++)
+                for (int i = 0; i < types.length; i++) {
                     types[i] = types[i].trim();
+                    if (!types[i].equals(types[i].toUpperCase()))
+                        throw new IllegalArgumentException("You probably didn't capitalize record types or \n" +
+                                "passed authors before types");
+                }
                 entries = typeVisitor.visit(types, entries);
             }
             if (!args[2].equals("")) {
-                AuthorVisitor surnameVisitor = new AuthorVisitor();
+                AuthorVisitor authorVisitor = new AuthorVisitor();
                 String[] authors = args[2].split("\\|");
-                for (int i = 0; i < authors.length; i++)
+                for (int i = 0; i < authors.length; i++) {
+                    authors[i] = authors[i].replaceAll(",","");
                     authors[i] = authors[i].trim();
-                entries = surnameVisitor.visit(authors, entries);
+                    authors[i] = authors[i].replaceAll("\\s+"," ");
+                }
+                entries = authorVisitor.visit(authors, entries);
             }
             for (AbstractEntryFactory entry : entries)
                 System.out.println(entry.getRecord());

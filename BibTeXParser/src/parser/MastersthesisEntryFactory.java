@@ -16,6 +16,7 @@ public class MastersthesisEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("type", "");
         super.getOptionalAttributes().put("address", "");
         super.getOptionalAttributes().put("month", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("note", "");
         super.getOptionalAttributes().put("key", "");
     }

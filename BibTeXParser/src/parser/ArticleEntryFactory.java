@@ -15,6 +15,7 @@ public class ArticleEntryFactory extends AbstractEntryFactory {
         super.getRequiredAttributes().put("year", "");
         super.getOptionalAttributes().put("volume", "");
         super.getOptionalAttributes().put("number", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("pages", "");
         super.getOptionalAttributes().put("doi", "");
         super.getOptionalAttributes().put("month", "");

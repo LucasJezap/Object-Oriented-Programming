@@ -18,6 +18,7 @@ public class InproceedingsEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("series", "");
         super.getOptionalAttributes().put("pages", "");
         super.getOptionalAttributes().put("address", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("organization", "");
         super.getOptionalAttributes().put("publisher", "");

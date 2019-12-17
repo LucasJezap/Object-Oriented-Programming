@@ -52,7 +52,7 @@ public class Parser {
                             line = fileReader.readLine();
                             x += "\n" + line;
                         }
-                        ((AbstractEntryFactory) entry).fillEntry(x, substitutedWords);
+                        ((AbstractEntryFactory) entry).fillEntry(x, substitutedWords, entries);
                         if (((AbstractEntryFactory) entry).checkRequired()) {
                             entries.add((AbstractEntryFactory) entry);
                             result.append(((AbstractEntryFactory) entry).getRecord());
@@ -62,8 +62,7 @@ public class Parser {
                         }
                     } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
                             InvocationTargetException e) {
-                        line = fileReader.readLine();
-                        continue;
+                        e.printStackTrace();
                     }
                 }
                 line = fileReader.readLine();

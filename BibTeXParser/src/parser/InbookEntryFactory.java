@@ -18,6 +18,7 @@ public class InbookEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("series", "");
         super.getOptionalAttributes().put("type", "");
         super.getOptionalAttributes().put("address", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("edition", "");
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("note", "");

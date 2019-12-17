@@ -19,6 +19,7 @@ public class IncollectionEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("series", "");
         super.getOptionalAttributes().put("type", "");
         super.getOptionalAttributes().put("chapter", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("pages", "");
         super.getOptionalAttributes().put("address", "");
         super.getOptionalAttributes().put("edition", "");

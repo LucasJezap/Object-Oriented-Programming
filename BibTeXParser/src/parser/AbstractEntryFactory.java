@@ -1,6 +1,7 @@
 package parser;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +28,6 @@ public abstract class AbstractEntryFactory {
     private String[] authorsSurnames;
     private String[] authorsNames;
 
-
     /**
      * an abstract method that initializes entry depending of it's type
      */
@@ -43,6 +43,7 @@ public abstract class AbstractEntryFactory {
         line = line.replaceAll("[{}\"$!=~\\\\']", "");
         line = line.replace("[", "");
         line = line.replace("]", "");
+        line = line.replaceAll("\\s+"," ");
         if (type.equals("journal"))
             line = line.replace("mbox", "");
         if (type.equals("year")) {
@@ -56,7 +57,7 @@ public abstract class AbstractEntryFactory {
      * @param entry            a string of the entry that we want to convert
      * @param substitutedWords a HashMap of words that should be replaced
      */
-    public void fillEntry(String entry, HashMap<String, String> substitutedWords) {
+    public void fillEntry(String entry, HashMap<String, String> substitutedWords, List<AbstractEntryFactory> entries) {
         String[] lines = entry.split((",[\\n\\r]"));
         Pattern pattern1 = Pattern.compile("@(\\w+)\\{(.+)");
         Matcher matcher1 = pattern1.matcher(lines[0]);
@@ -89,6 +90,46 @@ public abstract class AbstractEntryFactory {
             value = tmpValue.toString();
 
             value = fixLine(attribute, value);
+
+            /* CROSSREF */
+            if (attribute.equals("crossref")) {
+                AbstractEntryFactory crossrefEntry = new AbstractEntryFactory() {
+                    @Override
+                    public void initEntry() {
+                    }
+                };
+                for (AbstractEntryFactory entryx : entries) {
+                    if (entryx.getSubtype().equals(value.toLowerCase())) {
+                        crossrefEntry = entryx;
+                        break;
+                    }
+                }
+                for (String attributex: crossrefEntry.getRequiredAttributes().keySet()) {
+                    String valuex = crossrefEntry.getRequiredAttributes().get(attributex);
+                    if (attributex.equals("author")) {
+                        this.authorsSurnames = new String[valuex.split("and", -1).length];
+                        this.authorsNames = new String[this.authorsSurnames.length];
+                        String[] auth = valuex.split(" and ");
+                        for (int j = 0; j < auth.length; j++) {
+                            this.authorsNames[j] = auth[j].split(" ", 2)[0];
+                            this.authorsSurnames[j] = auth[j].split(" ")[auth[j].split(" ").length - 1];
+                        }
+                    }
+                    if (requiredAttributes.containsKey(attributex))
+                        requiredAttributes.replace(attributex,valuex);
+                    else if (optionalAttributes.containsKey(attributex))
+                        optionalAttributes.replace(attributex,valuex);
+                }
+                for (String attributex: crossrefEntry.getOptionalAttributes().keySet()) {
+                    String valuex = crossrefEntry.getOptionalAttributes().get(attributex);
+                    if (requiredAttributes.containsKey(attributex))
+                        requiredAttributes.replace(attributex,valuex);
+                    else if (optionalAttributes.containsKey(attributex))
+                        optionalAttributes.replace(attributex,valuex);
+                }
+                continue;
+            }
+
             if (attribute.equals("author")) {
                 this.authorsSurnames = new String[value.split("and", -1).length];
                 this.authorsNames = new String[this.authorsSurnames.length];
@@ -109,9 +150,11 @@ public abstract class AbstractEntryFactory {
      * @return true if the entry is valid (it have all required attributes)
      */
     public boolean checkRequired() {
-        for (String value : requiredAttributes.values())
-            if (value.equals(""))
+        for (String key : requiredAttributes.keySet())
+            if (requiredAttributes.get(key).equals("")) {
+                System.out.println(key);
                 return false;
+            }
         return true;
     }
 

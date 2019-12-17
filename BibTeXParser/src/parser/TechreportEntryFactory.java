@@ -21,6 +21,7 @@ public class TechreportEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("organization", "");
         super.getOptionalAttributes().put("publisher", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("note", "");
         super.getOptionalAttributes().put("key", "");
     }

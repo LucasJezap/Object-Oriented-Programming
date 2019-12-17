@@ -16,6 +16,7 @@ public class BookletEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("address", "");
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("year", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("note", "");
         super.getOptionalAttributes().put("key", "");
     }

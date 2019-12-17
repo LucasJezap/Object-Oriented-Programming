@@ -19,6 +19,7 @@ public class ProceedingsEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("booktitle", "");
         super.getOptionalAttributes().put("publisher", "");
         super.getOptionalAttributes().put("organization", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("note", "");
         super.getOptionalAttributes().put("key", "");
     }

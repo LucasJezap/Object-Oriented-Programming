@@ -15,6 +15,7 @@ public class MiscEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("year", "");
         super.getOptionalAttributes().put("note", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("key", "");
     }
 

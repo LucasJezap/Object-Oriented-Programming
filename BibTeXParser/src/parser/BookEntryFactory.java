@@ -16,6 +16,7 @@ public class BookEntryFactory extends AbstractEntryFactory {
         super.getOptionalAttributes().put("booktitle", "");
         super.getOptionalAttributes().put("volume", "");
         super.getOptionalAttributes().put("series", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("address", "");
         super.getOptionalAttributes().put("edition", "");
         super.getOptionalAttributes().put("month", "");

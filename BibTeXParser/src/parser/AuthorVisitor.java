@@ -23,7 +23,8 @@ public class AuthorVisitor implements iRecordVisitor {
         for (AbstractEntryFactory entry : entries) {
             for (int i = 0; i < entry.getAuthorsSurnames().length; i++) {
                 if (authors.contains(entry.getAuthorsNames()[i] + " " + entry.getAuthorsSurnames()[i]) ||
-                        authors.contains(entry.getAuthorsSurnames()[i]))
+                        authors.contains(entry.getAuthorsSurnames()[i]) ||
+                        authors.contains(entry.getAuthorsSurnames()[i] + " " + entry.getAuthorsNames()[i]))
                     matching.add(entry);
             }
         }

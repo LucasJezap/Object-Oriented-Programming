@@ -14,6 +14,7 @@ public class UnpublishedEntryFactory extends AbstractEntryFactory {
         super.getRequiredAttributes().put("note", "");
         super.getOptionalAttributes().put("month", "");
         super.getOptionalAttributes().put("year", "");
+        super.getOptionalAttributes().put("crossref", "");
         super.getOptionalAttributes().put("key", "");
     }
 
