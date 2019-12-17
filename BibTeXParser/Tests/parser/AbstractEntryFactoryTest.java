@@ -12,7 +12,7 @@ public class AbstractEntryFactoryTest {
     public void fixLine() {
         String x = "{\" random text 'random' mon$y! = ~ \\ money}";
         x = new ArticleEntryFactory().fixLine("nothing", x);
-        assertEquals(" random text random mony    money", x);
+        assertEquals(" random text random mony money", x);
     }
 
     @Test
@@ -26,7 +26,7 @@ public class AbstractEntryFactoryTest {
         AbstractEntryFactory entry = new ArticleEntryFactory();
         entry.initEntry();
         HashMap<String, String> map = new HashMap<>();
-        entry.fillEntry(input, map);
+        entry.fillEntry(input, map, null);
         assertEquals("ARTICLE", entry.getType());
         assertEquals("article-minimal", entry.getSubtype());
         assertEquals("Leslie A. Aamport", entry.getRequiredAttributes().get("author"));
@@ -46,19 +46,19 @@ public class AbstractEntryFactoryTest {
         AbstractEntryFactory entry = new ArticleEntryFactory();
         HashMap<String, String> map = new HashMap<>();
         entry.initEntry();
-        entry.fillEntry(input1, map);
+        entry.fillEntry(input1, map, null);
         assertTrue(entry.checkRequired());
-        String input2 = "@INCOLLECTION{incollection-crossref,\n" +
-                "   crossref = \"whole-collection\",\n" +
+        String input2 = "@INCOLLECTION{incollection-minimal,\n" +
                 "   author = \"Daniel D. Lincoll\",\n" +
                 "   title = \"Semigroups of Recurrences\",\n" +
-                "   pages = \"179--183\",\n" +
-                "   note = \"This is a cross-referencing INCOLLECTION entry\",\n" +
+                "   booktitle = \"High Speed Computer and Algorithm Organization\",\n" +
+                "   publisher = \"Academic Press\",\n" +
+                "   year = 1977,\n" +
                 "}";
         AbstractEntryFactory entry2 = new IncollectionEntryFactory();
         entry2.initEntry();
-        entry2.fillEntry(input2, map);
-        assertFalse(entry2.checkRequired());
+        entry2.fillEntry(input2, map, null);
+        assertTrue(entry2.checkRequired());
     }
 
     @Test
@@ -83,7 +83,7 @@ public class AbstractEntryFactoryTest {
         HashMap<String, String> map = new HashMap<>();
         AbstractEntryFactory entry = new ArticleEntryFactory();
         entry.initEntry();
-        entry.fillEntry(input, map);
+        entry.fillEntry(input, map, null);
         assertEquals(expected, entry.getRecord());
     }
 }

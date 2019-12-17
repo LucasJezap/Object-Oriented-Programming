@@ -24,7 +24,7 @@ public class IntegrationTests {
             AuthorVisitor authorVisitor = new AuthorVisitor();
             String[] authors = {args[2]};
             entries = authorVisitor.visit(authors, entries);
-            assertEquals(3, entries.size());
+            assertEquals(4, entries.size());
             String result = "";
             for (AbstractEntryFactory entry : entries)
                 result += entry.getRecord();
@@ -77,6 +77,25 @@ public class IntegrationTests {
                     "-------------------------------------------------------------------------------------------------------\n" +
                     "|   series           |   Four volumes                                                                 |\n" +
                     "-------------------------------------------------------------------------------------------------------\n"));
+            assertTrue(result.contains("-------------------------------------------------------------------------------------------------------\n" +
+                    "|   BOOK(book-crossref)                                                                               |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   year             |   1981                                                                         |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   author           |   Donald E. Knuth                                                              |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   publisher        |   Addison-Wesley                                                               |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   title            |   Seminumerical Algorithms                                                     |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   volume           |   2                                                                            |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   note             |   This is a cross-referencing BOOK entry                                       |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   series           |   The Art of Computer Programming                                              |\n" +
+                    "-------------------------------------------------------------------------------------------------------\n" +
+                    "|   edition          |   Second                                                                       |\n" +
+                    "-------------------------------------------------------------------------------------------------------"));
             assertFalse(result.contains("@STRING{STOC-key = \"OX{\\singleletter{stoc}}\"}"));
             assertFalse(result.contains("@preamble{ \"\\newcommand{\\noopsort}[1]{} \""));
         } catch (Exception e) {
@@ -89,7 +108,7 @@ public class IntegrationTests {
         try {
             Parser parser = new Parser();
             List<AbstractEntryFactory> entries = parser.parse(arg);
-            assertEquals(30, entries.size());
+            assertEquals(36, entries.size());
         } catch (IOException e) {
         }
     }
@@ -103,7 +122,7 @@ public class IntegrationTests {
             List<AbstractEntryFactory> entries = parser.parse(arg);
             AuthorVisitor authorVisitor = new AuthorVisitor();
             entries = authorVisitor.visit(authors, entries);
-            assertEquals(5, entries.size());
+            assertEquals(7, entries.size());
             for (AbstractEntryFactory entry : entries) {
                 assertTrue(Arrays.asList(entry.getAuthorsNames()).contains("Donald"));
                 assertTrue(Arrays.asList(entry.getAuthorsSurnames()).contains("Knuth"));
@@ -135,7 +154,7 @@ public class IntegrationTests {
             List<AbstractEntryFactory> entries = parser.parse(arg);
             AuthorVisitor authorVisitor = new AuthorVisitor();
             entries = authorVisitor.visit(authors, entries);
-            assertEquals(7, entries.size());
+            assertEquals(9, entries.size());
             for (AbstractEntryFactory entry : entries) {
                 assertTrue(Arrays.asList(entry.getAuthorsSurnames()).contains("Knuth") ||
                         Arrays.asList(entry.getAuthorsSurnames()).contains("Phony-Baloney"));
@@ -153,7 +172,7 @@ public class IntegrationTests {
             List<AbstractEntryFactory> entries = parser.parse(arg);
             TypeVisitor typeVisitor = new TypeVisitor();
             entries = typeVisitor.visit(types, entries);
-            assertEquals(4, entries.size());
+            assertEquals(5, entries.size());
             for (AbstractEntryFactory entry : entries) {
                 assertEquals("BOOK", entry.getType());
             }
@@ -184,7 +203,7 @@ public class IntegrationTests {
             List<AbstractEntryFactory> entries = parser.parse(arg);
             TypeVisitor typeVisitor = new TypeVisitor();
             entries = typeVisitor.visit(types, entries);
-            assertEquals(6, entries.size());
+            assertEquals(9, entries.size());
             for (AbstractEntryFactory entry : entries) {
                 assertTrue(entry.getType().equals("BOOK") || entry.getType().equals("ARTICLE"));
             }
@@ -204,7 +223,7 @@ public class IntegrationTests {
             entries = typeVisitor.visit(types, entries);
             AuthorVisitor authorVisitor = new AuthorVisitor();
             entries = authorVisitor.visit(authors, entries);
-            assertEquals(3, entries.size());
+            assertEquals(4, entries.size());
             for (AbstractEntryFactory entry : entries) {
                 assertEquals("BOOK", entry.getType());
                 assertTrue(Arrays.asList(entry.getAuthorsSurnames()).contains("Knuth"));
